@@ -40,6 +40,8 @@ dependencies {
 
     compile 'com.jakewharton.timber:timber:4.4.0'
 
+    compile 'com.squareup.picasso:picasso:2.5.2'
+
     compile 'com.google.code.gson:gson:2.7'
 
     compile 'io.reactivex:rxandroid:1.2.1'

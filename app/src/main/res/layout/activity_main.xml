@@ -1,20 +1,29 @@
 <?xml version="1.0" encoding="utf-8"?>
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
-    <RelativeLayout
-        android:id="@+id/activity_main"
+    <data>
+
+        <variable
+            name="user"
+            type="com.os.operando.kithub.entity.User" />
+    </data>
+
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:orientation="vertical"
         android:paddingBottom="@dimen/activity_vertical_margin"
         android:paddingLeft="@dimen/activity_horizontal_margin"
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
-        tools:context="com.os.operando.kithub.MainActivity">
+        tools:context="com.os.operando.kithub.activity.ProfileActivity">
 
-        <TextView
+        <ImageView
+            android:id="@+id/prifile_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Hello World!" />
-    </RelativeLayout>
+            app:imageUrl="@{user.avatarUrl}" />
+    </LinearLayout>
 </layout>
