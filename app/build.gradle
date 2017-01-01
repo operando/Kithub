@@ -1,5 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion 25
@@ -12,6 +13,9 @@ android {
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
+    dataBinding {
+        enabled = true
+    }
     buildTypes {
         release {
             minifyEnabled false
@@ -23,12 +27,36 @@ android {
     }
 }
 
+ext {
+    retrofit_version = '2.1.0'
+    okhttp_version = '3.5.0'
+    stetho_version = '1.4.2'
+}
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
 
     compile 'com.android.support:appcompat-v7:25.1.0'
 
+    compile 'com.jakewharton.timber:timber:4.4.0'
+
+    compile 'com.google.code.gson:gson:2.7'
+
+    compile 'io.reactivex:rxandroid:1.2.1'
+
+    debugCompile "com.facebook.stetho:stetho:${stetho_version}"
+    debugCompile "com.facebook.stetho:stetho-okhttp3:${stetho_version}"
+
     compile "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    compile "com.squareup.okhttp3:okhttp:$okhttp_version"
+    compile "com.squareup.okhttp3:logging-interceptor:$okhttp_version"
+
+    compile "com.squareup.retrofit2:retrofit:$retrofit_version"
+    compile "com.squareup.retrofit2:adapter-rxjava:$retrofit_version"
+    compile "com.squareup.retrofit2:converter-gson:$retrofit_version"
+
+    kapt 'com.android.databinding:compiler:2.2.3'
 
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
