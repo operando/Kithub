@@ -2,6 +2,9 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 
+// load Properties
+def githubProp = loadProperties("github.properties")
+
 android {
     compileSdkVersion 25
     buildToolsVersion "25.0.2"
@@ -12,6 +15,9 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        buildConfigField "String", "GITHUB_CLIENT_ID", "\"${githubProp.getProperty("client_id")}\""
+        buildConfigField "String", "GITHUB_CLIENT_SECRET", "\"${githubProp.getProperty("client_secret")}\""
     }
     dataBinding {
         enabled = true
@@ -65,4 +71,15 @@ dependencies {
     })
 
     testCompile 'junit:junit:4.12'
+}
+
+/**
+ * Reads properties from the specified .properties file.
+ */
+def loadProperties(filename) {
+    def props = new Properties()
+    file(filename).withInputStream {
+        props.load(it)
+    }
+    return props
 }
