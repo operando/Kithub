@@ -16,6 +16,11 @@ interface GitHubApiClient {
                          @Path("fingerprint") fingerprint: String,
                          @Body body: AuthorizationBody): Single<AuthToken>
 
+    @GET("/user/repos")
+    fun getUserRepos(@Header("Authorization") authorization: String,
+                     @Query("page") page: Int,
+                     @Query("per_page") perPage: Int): Single<List<Repo>>
+
     @GET("/users/{user}/repos")
     fun getUserRepos(@Path("user") user: String,
                      @Query("sort") sort: String = "updated",

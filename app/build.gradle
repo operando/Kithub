@@ -18,6 +18,7 @@ android {
 
         buildConfigField "String", "GITHUB_CLIENT_ID", "\"${githubProp.getProperty("client_id")}\""
         buildConfigField "String", "GITHUB_CLIENT_SECRET", "\"${githubProp.getProperty("client_secret")}\""
+        buildConfigField "String", "GITHUB_TEST_TOKEN", "\"${githubProp.getProperty("test_token")}\""
     }
     dataBinding {
         enabled = true

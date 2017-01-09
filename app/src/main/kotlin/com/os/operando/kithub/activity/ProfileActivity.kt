@@ -12,6 +12,7 @@ import com.os.operando.kithub.BuildConfig
 import com.os.operando.kithub.R
 import com.os.operando.kithub.api.AuthorizationBody
 import com.os.operando.kithub.api.GitHubApiClient
+import com.os.operando.kithub.api.GitHubPaginationInterceptor
 import com.os.operando.kithub.databinding.ActivityMainBinding
 import com.os.operando.kithub.extension.addTo
 import okhttp3.OkHttpClient
@@ -45,6 +46,7 @@ class ProfileActivity : AppCompatActivity() {
         val okHttp = OkHttpClient.Builder()
                 .addNetworkInterceptor(StethoInterceptor())
                 .addInterceptor(loggingInterceptor)
+                .addInterceptor(GitHubPaginationInterceptor())
                 .build()
 
         val retrofit = Retrofit.Builder()
@@ -61,6 +63,17 @@ class ProfileActivity : AppCompatActivity() {
                 .subscribe({
                     Timber.d(it.toString())
                     binding.user = it
+                })
+                .addTo(subscriptions)
+
+        val header = "token " + BuildConfig.GITHUB_TEST_TOKEN
+
+        retrofit.create(GitHubApiClient::class.java)
+                .getUserRepos(header, 1, 2)
+                .subscribeOn(Schedulers.io())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe({
+                    Timber.d(it.toString())
                 })
                 .addTo(subscriptions)
 
